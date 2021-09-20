@@ -1,0 +1,5 @@
+/src/meta-openembedded/
+/src/poky/
+/src/.mrconfig
+/build/
+/build*/

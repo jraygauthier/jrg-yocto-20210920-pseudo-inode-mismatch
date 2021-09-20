@@ -1,0 +1,29 @@
+
+[DEFAULT]
+# pin = TODO: Implement pin from a yaml file.
+# lib = TODO: implement utility functions.
+#             See myrepos.branchable.com/mrconfig.complex.
+
+[poky]
+checkout = \
+  git -C "$(dirname "$MR_REPO")" clone \
+    "git://git.yoctoproject.org/poky" \
+    -b "hardknott"
+pin = \
+  git -C "$MR_REPO" -c advice.detachedHead=false checkout \
+    "4624b855ed47c5da08953191bfbb39e764ecb343"
+defbranch = \
+  git -C "$MR_REPO" -c advice.detachedHead=false checkout \
+    "hardknott"
+
+[meta-openembedded]
+checkout = \
+  git -C "$(dirname "$MR_REPO")" clone \
+    "git://git.openembedded.org/meta-openembedded" \
+    -b "hardknott"
+pin = \
+  git -C "$MR_REPO" -c advice.detachedHead=false checkout \
+    "7bd7e1da9034e72ca4262dba55f70b2b23499aae"
+defbranch = \
+  git -C "$MR_REPO" -c advice.detachedHead=false checkout \
+    "hardknott"

@@ -1,0 +1,15 @@
+POKY_BBLAYERS_CONF_VERSION = "2"
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+YOCTOROOT = "${@os.path.abspath(os.path.join("${TOPDIR}", os.pardir))}"
+YOCTOSRC = "${YOCTOROOT}/src"
+
+BBLAYERS ?= " \
+  ${YOCTOSRC}/poky/meta \
+  ${YOCTOSRC}/poky/meta-poky \
+  ${YOCTOSRC}/meta-openembedded/meta-oe \
+  ${YOCTOSRC}/meta-openembedded/meta-python \
+  ${YOCTOSRC}/meta-openembedded/meta-networking \
+  ${YOCTOSRC}/meta-pseudo-ino \
+"

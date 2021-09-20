@@ -1,0 +1,53 @@
+# Shared between all builds
+DL_DIR ?= "/downloads"
+
+# Shared between all builds
+SSTATE_DIR ?= "/sstate-cache"
+
+#
+# The set of conf variable that can be customized
+# via environment variables.
+# This is only possible because of `BB_ENV_EXTRAWHITE`
+# env var extended by our docker's entry point.
+# `.docker/entry-point/inner.sh`.
+#
+MACHINE ?= "qemux86-64"
+
+# Allow developers to have guarded section
+# diverging from official builds
+# Please prefix variants by 'dev' so that the
+# nature of the build is made clear in the name of the
+# tmp dir (e.g.: 'dev-myname' or 'dev-with-my-feat', etc).
+# It might also simply be 'dev'.
+# 'official' should be the pristine and reproducible
+# official build / release value (i.e: no dev variants).
+LOCALCONF_FLAVOR ?= "official"
+
+# Allow us to create separate build outputs for
+# variants of the build. Useful for experiments.
+TMPDIR_SUFFIX ?= ""
+
+# Note how the above customization are reflected in the output dir.
+# This prevent a variant from overriding another.
+TMPDIR = "${YOCTOROOT}/build/tmp-${MACHINE}-${LOCALCONF_FLAVOR}${TMPDIR_SUFFIX}"
+
+# DISTRO ?= "poky"
+DISTRO ?= "pseudo-ino-linux"
+PACKAGE_CLASSES ?= "package_rpm"
+EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+USER_CLASSES ?= "buildstats image-mklibs image-prelink"
+PATCHRESOLVE = "noop"
+BB_DISKMON_DIRS = "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    ABORT,${TMPDIR},100M,1K \
+    ABORT,${DL_DIR},100M,1K \
+    ABORT,${SSTATE_DIR},100M,1K \
+    ABORT,/tmp,10M,1K"
+PACKAGECONFIG_append_pn-qemu-native = " sdl"
+PACKAGECONFIG_append_pn-nativesdk-qemu = " sdl"
+CONF_VERSION = "1"
+OE_TERMINAL = "screen"
+ACCEPT_FSL_EULA = "1"

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euf -o pipefail
+# Change this string and launch build to
+# trigger the pseudo inode mismatch issue.
+echo "Hello1"

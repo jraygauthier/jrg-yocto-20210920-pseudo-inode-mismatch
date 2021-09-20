@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  yocto-build-env:
+    container_name: pseudo-ino-yocto-build-env
+    environment:
+      # Use our layer's sample local.conf, bblayer.conf
+      # and other in case none provided.
+      TEMPLATECONF: /workdir/src/meta-pseudo-ino/conf
+    volumes:
+     -  type: bind
+        source: ../pseudo-ino
+        target: /workdir

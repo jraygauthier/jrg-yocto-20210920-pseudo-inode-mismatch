@@ -1,0 +1,4 @@
+/.docker/common.override.yml
+/common/yocto-cache/
+/common/yocto-cache*/
+/common/docker-persistant-state/

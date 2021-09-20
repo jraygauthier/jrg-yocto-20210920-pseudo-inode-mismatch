@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  yocto-build-env:
+    image: crops/poky:ubuntu-20.04
+    # build:
+    #   context: .
+    #   dockerfile: ./common.Dockerfile
+    container_name: common-yocto-build-env
+    environment:
+      SSH_AUTH_SOCK: /ssh-agent
+      BUILDER_UID: ${COMPOSE_UID}
+      BUILDER_GID: ${COMPOSE_GID}
+      HISTFILE: /persistant-state/.bash_history
+      # HISTSIZE: 20
+    # privileged: true
+    volumes:
+     -  type: bind
+        source: ${SSH_AUTH_SOCK}
+        target: /ssh-agent
+     -  type: bind
+        source: ../common/yocto-cache/downloads
+        target: /downloads
+     -  type: bind
+        source: ../common/yocto-cache/sstate
+        target: /sstate-cache
+     -  type: bind
+        source: ../common/docker-persistant-state
+        target: /persistant-state
+     -  type: bind
+        source: ./entry-point
+        target: /entry-point
+        read_only: true
+    working_dir: /workdir
+    entrypoint: ["/entry-point/outer.sh"]
+    # command: ["bash"]
+    # ulimits  # See known chromium build issue.

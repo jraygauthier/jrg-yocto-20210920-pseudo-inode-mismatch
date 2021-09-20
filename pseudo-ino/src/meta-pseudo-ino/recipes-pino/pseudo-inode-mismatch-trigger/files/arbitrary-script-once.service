@@ -1,0 +1,11 @@
+[Unit]
+Description=ArbitraryScriptOnce
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/arbitrary-script
+
+[Install]
+WantedBy=multi-user.target
